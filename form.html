@@ -1,0 +1,55 @@
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <title>${title}</title>
+    <meta name="description" content="${description}" />
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/riot/2.3.18/riot+compiler.js'></script>
+
+    <style>${style}</style>
+  </head>
+  <body>
+    <!-- ユーザー定義のタグをここに展開 -->
+    <app></app>
+
+    <!-- app タグを定義 -->
+    <script type='riot/tag'>
+      <title>form test</title>
+      <app>
+        <h1>form</h1>
+        <p>{flag ? 'login success' : 'not login'}</p>
+
+        <form onsubmit='{submit}'>
+          <input type='text' name='username' />
+          <input type='password' name='password' />
+          <button type='submit' name='submit'>login</button>
+        </form>
+
+        this.flag = false;
+
+        this.on('mount', () => {
+          this.username.value = 'phi';
+          this.password.value = '1234abcd';
+        });
+
+        this.submit = () => {
+          console.log('username: ', this.username.value);
+          console.log('password: ', this.password.value);
+          if (this.username.value === 'phi' && this.password.value === '1234abcd')
+            this.flag = true;
+          else
+            this.flag = false;
+        };
+      </app>
+    </script>
+
+    <script>
+      // マウント
+      riot.mount('*');
+    </script>
+  </body>
+</html>
